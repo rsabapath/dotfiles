@@ -1,0 +1,13 @@
+[user]
+  name = Rathesh Saba
+  email = rathesh.saba@gmail.com
+[alias]
+  co = checkout
+  alias = config --get-regexp 'alias.*'
+  st = status -sb
+[core]
+  editor = vim
+[color]
+  ui = true
+[merge]
+  tool = kdiff3
