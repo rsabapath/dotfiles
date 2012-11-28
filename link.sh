@@ -7,6 +7,7 @@ files=(
   .vim
   .vimrc
   .gitconfig
+  bin/find_parent_git
 )
 
 function link_files() {

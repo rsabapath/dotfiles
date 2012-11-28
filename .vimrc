@@ -20,6 +20,11 @@ set autochdir
 set title " modifies window to have filename as its title
 set shell=/bin/bash
 set viminfo='10,\"100,:20,%,n~/.viminfo " saves position in files
+nnoremap ,, <C-^>
+let mapleader=","
+
+cnoremap %g <C-R>=FindParentGit("true")<cr>
+cnoremap %G <C-R>=FindParentGit("")<cr>
 
 silent!colorscheme desert
 
@@ -55,3 +60,46 @@ set statusline+=\ %y " Filetype
 set statusline+=\ char=\[%b\]
 set statusline+=\ %=%l/%L\ (%p%%)\ \  " right align percentages
 " }}}
+
+" Command-T
+map <leader>f :CommandTFlush<cr>\|:CommandT<cr>
+map <leader>F :CommandTFlush<cr>\|:CommandT $HOME<cr>
+map <leader>g :CommandTFlush<cr>\|:CommandT %g<cr>
+map <leader>G :CommandTFlush<cr>\|:CommandT %G<cr>
+
+function! FindParentGit(gitIgnore)
+  let x = system('find_parent_git')
+  let x = substitute(x, '\n$', '', '')
+
+  " if we find no parent git, return .git
+  " this is a little silly, but it means Command-T will react properly
+  if x == "no parent git found"
+    return ".git"
+  endif
+
+  " if the root folder contains a gitignore, let's add that to wildignore
+  let filename = x . '/.gitignore'
+  if filereadable(filename)
+      let igstring = ''
+      for oline in readfile(filename)
+          let line = substitute(oline, '\s|\n|\r', '', "g")
+          if line =~ '^#' | con | endif
+          if line == '' | con  | endif
+          if line =~ '^!' | con  | endif
+          if line =~ '/$' | let igstring .= "," . line . "*" | con | endif
+          let igstring .= "," . line
+      endfor
+      if a:gitIgnore == "true"
+        let execstring = "set wildignore+=".substitute(igstring, '^,', '', "g")
+      else
+        " may be problematic in niche cases, for now it'll do
+        let execstring = "set wildignore-=".substitute(igstring, '^,', '', "g")
+      endif
+      execute execstring
+  endif
+
+  return x
+endfunction
+
+call pathogen#infect()
+call pathogen#helptags()

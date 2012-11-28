@@ -1,4 +1,4 @@
-# ~/.profile: executed by the command interpreter for login shells.
+# ~/.profile: executedy the command interpreter for login shells.
 # This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
 # exists.
 # see /usr/share/doc/bash/examples/startup-files for examples.
@@ -8,35 +8,29 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
-# if running bash
-if [ -n "$BASH_VERSION" ]; then
-    # include .bashrc if it exists
-    if [ -f "$HOME/.bashrc" ]; then
-	. "$HOME/.bashrc"
-    fi
-fi
-
-# set PATH so it includes user's private bin if it exists
+alias ls="ls -G"
+export MPJ_HOME=/mpj
+export PATH=$PATH:$MPJ_HOME/bin
+alias javacmpi="javac -cp .:$MPJ_HOME/lib/mpj.jar"
+alias mpjrun="mpjrun.sh"
+ #set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
-alias ls="ls --color"
-alias l="ls --color -F"
 PS1='[\[\e[1;32m\]\u\[\e[m\]@\[\e[1;31m\]\h\[\e[m\]][\[\e[1;34m\]\w\[\e[m\]] > '
   # change the color of root
 if [ "${USER}" == "root" ] ; then
     PS1='[\[\e[1;33m\]\u\[\e[m\]@\[\e[1;31m\]\h\[\e[m\]][\[\e[1;34m\]\w\[\e[m\]] > '
 fi
 PROMPT_COMMAND='echo -ne "\033]0;${HOSTNAME} - ${PWD}\007"'
-linuxlogo -u
 
 # function for cd + ls combo
 function cd () {
   if [ -z "$1" ] ; then
     return
   fi
-  builtin cd "$@" && ls
+  builtin cd "$@" && ls 
 }
 
 # function for extracting zip/tar files
@@ -61,3 +55,7 @@ extract () {
 }
 
 set -o vi
+
+PATH="$HOME/bin:$PATH"
+
+PS1='[\[\e[1;32m\]\w\[\e[m\]] > '
