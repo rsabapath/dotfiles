@@ -8,6 +8,7 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
+alias saba="ssh rathesh@www.code-explode.com"
 alias ls="ls -G"
 export MPJ_HOME=/mpj
 export PATH=$PATH:$MPJ_HOME/bin

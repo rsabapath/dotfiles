@@ -1,3 +1,9 @@
 [submodule ".vim/bundle/command-t"]
 	path = .vim/bundle/command-t
 	url = git://git.wincent.com/command-t.git
+[submodule ".vim/bundle/syntastic"]
+	path = .vim/bundle/syntastic
+	url = git://github.com/scrooloose/syntastic.git
+[submodule ".vim/bundle/jsbeautify"]
+	path = .vim/bundle/jsbeautify
+	url = git://github.com/maksimr/vim-jsbeautify.git

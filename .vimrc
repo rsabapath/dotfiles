@@ -103,3 +103,7 @@ endfunction
 
 call pathogen#infect()
 call pathogen#helptags()
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+autocmd FileType javascript nnoremap <leader>j :call JsBeautify()<CR>
